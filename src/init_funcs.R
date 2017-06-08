@@ -17,3 +17,23 @@ select_local_networks <- function(networks_path){
   else network_definition <- network_files[[1]]
   network_definition
 }
+
+#' Title
+#'
+#' @param bayes_net an initialsed Bayesian Netowrk Java Object 
+#'
+#' @return A nested tibble containing network nodes
+#' @export 
+#'
+get_network_nodes <- function(bayes_net){
+  node_handles <-.jcall(obj=bayes_net, returnSig="[I", method='getAllNodes')
+  nodes <- 
+    data_frame(node_handle = node_handles) %>%
+    mutate(id = map_chr(node_handle, ~.jcall(obj=bayes_net, returnSig="S", method='getNodeId', .)),
+           name = map_chr(node_handle, ~.jcall(obj=bayes_net, returnSig="S", method='getNodeName', .)),
+           description = map_chr(node_handle, ~.jcall(obj=bayes_net, returnSig="S", method='getNodeDescription', .)),
+           parents = map(node_handle, ~.jcall(obj=bayes_net, returnSig="[I", method='getParents', .)),
+           children = map(node_handle, ~.jcall(obj=bayes_net, returnSig="[I", method='getChildren', .))
+    )
+  nodes
+}
