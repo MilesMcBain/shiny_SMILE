@@ -30,10 +30,42 @@ get_network_nodes <- function(bayes_net){
   nodes <- 
     data_frame(node_handle = node_handles) %>%
     mutate(id = map_chr(node_handle, ~.jcall(obj=bayes_net, returnSig="S", method='getNodeId', .)),
+           type = map_chr(node_handle, ~get_node_type(bayes_net, .)),
            name = map_chr(node_handle, ~.jcall(obj=bayes_net, returnSig="S", method='getNodeName', .)),
            description = map_chr(node_handle, ~.jcall(obj=bayes_net, returnSig="S", method='getNodeDescription', .)),
+           outcomes = map(node_handle, ~get_node_outcomes(bayes_net, .)),
            parents = map(node_handle, ~.jcall(obj=bayes_net, returnSig="[I", method='getParents', .)),
            children = map(node_handle, ~.jcall(obj=bayes_net, returnSig="[I", method='getChildren', .))
     )
   nodes
+}
+
+get_node_type <- function(bayes_net, node_handle){
+  node_type_int <- .jcall(obj=bayes_net, returnSig="I", method='getNodeType', node_handle)
+  type <- switch(as.character(node_type_int),
+                 "18" = "Cpt",
+                 "20" = "TruthTable",
+                 "17" = "List",
+                 "8"  = "Table",
+                 "520"= "Mau",
+                 "146"= "NoisyMax",
+                 "274"= "NoisyAdder",
+                 "4"  = "Equation",
+                 "82" = "DeMorgan",
+                 "NF"
+                 )
+  type
+}
+
+get_node_outcomes <- function(bayes_net, node_handle){
+  num_outcomes <- .jcall(obj=bayes_net, returnSig="I", method='getOutcomeCount', node_handle)
+  if(get_node_type(bayes_net, node_handle) %in% c("Cpt", "List")){
+    outcomes_inorder <- map_chr(as.integer((1:num_outcomes)-1), 
+                                  ~.jcall(obj=bayes_net, returnSig="S", method='getOutcomeId', node_handle, .)) %>%
+                        forcats::as_factor() #makes states a factor with levels in the order they appear.
+  }else{
+    outcomes_inorder <- NA
+  }
+  outcomes_inorder
+    
 }

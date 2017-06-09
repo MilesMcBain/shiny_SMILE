@@ -3,6 +3,9 @@
 ## Required
 library(rJava)
 library(tidyverse)
+library(htmlwidgets)
+library(rhandsontable)
+library(forcats)
 
 ## Maybe Required
 library(rChoiceDialogs)
@@ -34,4 +37,6 @@ network_definition <- select_local_networks(networks_path)
 
 # Construct a list of nodes in network
 nodes_df <- get_network_nodes(bayes_net)
+View(nodes_df)
+
 

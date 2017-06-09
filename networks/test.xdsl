@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<smile version="1.0" id="Network1" numsamples="1000" discsamples="10000">
+	<nodes>
+		<decision id="Node1">
+			<state id="Choice0" />
+			<state id="Choice1" />
+		</decision>
+		<cpt id="Node4">
+			<state id="State0" />
+			<state id="State1" />
+			<probabilities>0.7 0.3</probabilities>
+		</cpt>
+		<cpt id="Node2">
+			<state id="State0" />
+			<state id="State1" />
+			<parents>Node1 Node4</parents>
+			<probabilities>0.8 0.2 0.75 0.25 0.2 0.8 0.4 0.6</probabilities>
+		</cpt>
+		<utility id="Node3">
+			<parents>Node2</parents>
+			<utilities>60 20</utilities>
+		</utility>
+	</nodes>
+	<extensions>
+		<genie version="1.0" app="GeNIe 2.0.5219.0" name="Network1" faultnameformat="nodestate">
+			<node id="Node1">
+				<name>Node1</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>324 144 367 170</position>
+				<barchart active="true" />
+			</node>
+			<node id="Node2">
+				<name>Node2</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>385 280 433 310</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="Node3">
+				<name>Node3</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>455 403 506 435</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<node id="Node4">
+				<name>Node4</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>520 186 568 216</position>
+				<barchart active="true" />
+			</node>
+		</genie>
+	</extensions>
+</smile>
