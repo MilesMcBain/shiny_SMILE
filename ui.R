@@ -21,7 +21,10 @@ shinyUI(fluidPage(
       shiny::actionButton(inputId = "copy", label = "copy"),
       shiny::actionButton(inputId = "paste", label = "paste"),
       shiny::actionButton(inputId = "delete", label = "delete"),
-      shiny::selectInput(inputId = "scenarios", label = "Configured Scenarios", choices = r_scenarios)
+      br(), br(),
+      shiny::selectInput(inputId = "scenarios", label = "Configured Scenarios", choices = r_scenarios),
+      shiny::actionButton(inputId = "import", label = "import"),
+      shiny::actionButton(inputId = "export", label = "export")
     ),
     mainPanel(
       uiOutput("scenario_parameters")
