@@ -4,20 +4,24 @@
 library(rJava)
 library(tidyverse)
 library(htmlwidgets)
-library(rhandsontable)
 library(forcats)
+library(shiny)
 
 ## Maybe Required
 library(rChoiceDialogs)
 
 # FUNCTIONS
 source("./src/init_funcs.R")
+source("./src/helper_funcs.R")
 
 # GLOBALS
 # smile library and java wrapper from: https://download.bayesfusion.com/files.html?category=Academia
 # Using x64 version
-SMILE_jar_path <- "/home/miles/smile/smile.jar"
-SMILE_dll_path <- "/home/miles/smile/libjsmile.so"
+SMILE_jar_path <- "/home/miles/code/jsmile/smile.jar"
+SMILE_dll_path <- "/home/miles/code/jsmile/libjsmile.so"
+
+## Reactive Values
+r_scenarios = list()
 
 # Network defintion files
 networks_path = file.path(getwd(), "networks")
@@ -37,6 +41,6 @@ network_definition <- select_local_networks(networks_path)
 
 # Construct a list of nodes in network
 nodes_df <- get_network_nodes(bayes_net)
-View(nodes_df)
+
 
 

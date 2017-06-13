@@ -14,10 +14,22 @@ shinyUI(fluidPage(
   
   # Application title
   titlePanel("Bayesin Network Scenario Interface"),
+  sidebarLayout(
+    sidebarPanel(
+      textInput(inputId = "new_scenario_name", label = "Scenario Name", placeholder = "Scenario"),
+      shiny::actionButton(inputId = "save", label = "save"),
+      shiny::actionButton(inputId = "copy", label = "copy"),
+      shiny::actionButton(inputId = "paste", label = "paste"),
+      shiny::actionButton(inputId = "delete", label = "delete"),
+      shiny::selectInput(inputId = "scenarios", label = "Configured Scenarios", choices = r_scenarios)
+    ),
+    mainPanel(
+      uiOutput("scenario_parameters")
+    )
   
-  fluidRow(
-    rhandsontable::rHandsontableOutput("node_table")
   )
+  
+  
   
   
 ))
